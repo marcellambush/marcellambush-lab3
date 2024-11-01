@@ -17,7 +17,23 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Lab3_Tester {
 
-  @Test
+  public String getFileContents(String filename){
+    String data = "";
+    try {
+      File myObj = new File(filename);
+      Scanner myReader = new Scanner(myObj);
+      while (myReader.hasNextLine()) {
+        data = myReader.nextLine();
+      }
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("could not open " + filename);
+      e.printStackTrace();
+    }
+    return data;
+  }
+
+ @Test
   public void test1() {
     System.out.println("process long text with found stopword");
     String expected = "7";
@@ -146,7 +162,7 @@ public class Lab3_Tester {
       result = WordCounter.processFile("invalid.txt");
     } catch (Exception e) {}
     assertEquals(expected, result.toString());
-    System.setIn(sysInBackup); // optionally, reset System.in to its original
+    System.setIn(sysInBackup); //optionally, reset System.in to its original
   }
 
   @Test
@@ -171,7 +187,7 @@ public class Lab3_Tester {
     assertEquals("EmptyFileException: empty.txt was empty", result);
   }
 
-    @Test
+   @Test
   public void test11() {
     System.out.println("test main valid number choice 1 with stopword");
     try {
